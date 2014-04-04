@@ -25,6 +25,7 @@
 namespace WindowsAzure\ServiceManagement\Models;
 use WindowsAzure\Common\Internal\Resources;
 use WindowsAzure\Common\Internal\Utilities;
+use WindowsAzure\ServiceManagement\Internal\WindowsAzureService;
 
 /**
  * The storage service class.
@@ -34,30 +35,57 @@ use WindowsAzure\Common\Internal\Utilities;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
-class StorageService extends Service
+class StorageService extends WindowsAzureService
 {
     /**
      * @var string
      */
-    private $_affinityGroup;
+    private $_blobEndpointUri;
+    
+    /**
+     * @var string
+     */
+    private $_queueEndpointUri;
+    
+    /**
+     * @var string
+     */
+    private $_tableEndpointUri;
+    
+    /**
+     * @var string
+     */
+    private $_status;
     
     /**
      * Constructs new storage service object.
-     * 
-     * @param array $raw The array representation for storage service.
      */
-    public function __construct($raw = null)
+    public function __construct()
     {
-        parent::__construct($raw);
-        $this->setAffinityGroup(
-            Utilities::tryGetValue($raw, Resources::XTAG_AFFINITY_GROUP)
-        );
-        $this->setName(
-            Utilities::tryGetValue($raw, Resources::XTAG_SERVICE_NAME)
-        );
+        $sources = func_get_args();
+        parent::__construct($sources);
+        
+        foreach ($sources as $source) {
+            $this->setStatus(
+                Utilities::tryGetValue(
+                    $source,
+                    Resources::XTAG_STATUS,
+                    $this->getStatus()
+                )
+            );
+            
+            $endpoints = Utilities::tryGetKeysChainValue(
+                $source,
+                Resources::XTAG_ENDPOINTS,
+                Resources::XTAG_ENDPOINT
+            );
+            $this->setBlobEndpointUri(Utilities::tryGetValue($endpoints, 0));
+            $this->setQueueEndpointUri(Utilities::tryGetValue($endpoints, 1));
+            $this->setTableEndpointUri(Utilities::tryGetValue($endpoints, 2));
+        }
     }
     
     /**
@@ -67,8 +95,8 @@ class StorageService extends Service
      */
     protected function toArray()
     {
-        $arr   = parent::toArray();
-        $order = array(
+        $arr     = parent::toArray();
+        $order   = array(
             Resources::XTAG_NAMESPACE,
             Resources::XTAG_SERVICE_NAME,
             Resources::XTAG_DESCRIPTION,
@@ -76,40 +104,96 @@ class StorageService extends Service
             Resources::XTAG_AFFINITY_GROUP,
             Resources::XTAG_LOCATION
         );
-        Utilities::addIfNotEmpty(
-            Resources::XTAG_SERVICE_NAME, $this->getName(),
-            $arr
-        );
-        Utilities::addIfNotEmpty(
-            Resources::XTAG_AFFINITY_GROUP, $this->_affinityGroup,
-            $arr
-        );
         $ordered = Utilities::orderArray($arr, $order);
         
         return $ordered;
     }
     
     /**
-     * Gets the affinityGroup name.
+     * Gets the status.
      * 
-     * @return string 
+     * @return string
      */
-    public function getAffinityGroup()
+    public function getStatus()
     {
-        return $this->_affinityGroup;
+        return $this->_status;
     }
     
     /**
-     * Sets the affinityGroup name.
+     * Sets the status.
      * 
-     * @param string $affinityGroup The affinityGroup name.
+     * @param string $status The status.
      * 
      * @return none
      */
-    public function setAffinityGroup($affinityGroup)
+    public function setStatus($status)
     {
-        $this->_affinityGroup = $affinityGroup;
+        $this->_status = $status;
+    }
+    
+    /**
+     * Gets storage service blob endpoint uri.
+     * 
+     * @return string
+     */
+    public function getBlobEndpointUri()
+    {
+        return $this->_blobEndpointUri;
+    }
+    
+    /**
+     * Gets storage service queue endpoint uri.
+     * 
+     * @return string
+     */
+    public function getQueueEndpointUri()
+    {
+        return $this->_queueEndpointUri;
+    }
+
+    /**
+     * Gets storage service table endpoint uri.
+     * 
+     * @return string
+     */
+    public function getTableEndpointUri()
+    {
+        return $this->_tableEndpointUri;
+    }
+    
+    /**
+     * Gets storage service blob endpoint uri.
+     * 
+     * @param string $blobEndpointUri The endpoint URI.
+     * 
+     * @return string
+     */
+    public function setBlobEndpointUri($blobEndpointUri)
+    {
+        $this->_blobEndpointUri = $blobEndpointUri;
+    }
+    
+    /**
+     * Gets storage service queue endpoint uri.
+     * 
+     * @param string $queueEndpointUri The endpoint URI.
+     * 
+     * @return string
+     */
+    public function setQueueEndpointUri($queueEndpointUri)
+    {
+        $this->_queueEndpointUri = $queueEndpointUri;
+    }
+
+    /**
+     * Gets storage service table endpoint uri.
+     * 
+     * @param string $tableEndpointUri The endpoint URI.
+     * 
+     * @return string
+     */
+    public function setTableEndpointUri($tableEndpointUri)
+    {
+        $this->_tableEndpointUri = $tableEndpointUri;
     }
 }
-
-

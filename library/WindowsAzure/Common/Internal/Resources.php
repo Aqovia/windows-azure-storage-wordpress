@@ -11,7 +11,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * PHP version 5
  *
  * @category  Microsoft
@@ -21,7 +21,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
- 
+
 namespace WindowsAzure\Common\Internal;
 
 /**
@@ -32,13 +32,13 @@ namespace WindowsAzure\Common\Internal;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 class Resources
 {
     // @codingStandardsIgnoreStart
-    
+
     // Connection strings
     const USE_DEVELOPMENT_STORAGE_NAME = 'UseDevelopmentStorage';
     const DEVELOPMENT_STORAGE_PROXY_URI_NAME = 'DevelopmentStorageProxyUri';
@@ -61,7 +61,12 @@ class Resources
     const SERVICE_BUS_ENDPOINT_NAME = 'Endpoint';
     const SHARED_SECRET_ISSUER_NAME = 'SharedSecretIssuer';
     const SHARED_SECRET_VALUE_NAME = 'SharedSecretValue';
-    
+    const STS_ENDPOINT_NAME = 'StsEndpoint';
+    const MEDIA_SERVICES_ENDPOINT_URI_NAME = 'MediaServicesEndpoint';
+    const MEDIA_SERVICES_ACCOUNT_NAME = 'AccountName';
+    const MEDIA_SERVICES_ACCESS_KEY = 'AccessKey';
+    const MEDIA_SERVICES_OAUTH_ENDPOINT_URI_NAME = 'OAuthEndpoint';
+
     // Messages
     const INVALID_TYPE_MSG = 'The provided variable should be of type: ';
     const INVALID_META_MSG = 'Metadata cannot contain newline characters.';
@@ -87,8 +92,8 @@ class Resources
     const INVALID_BLOB_PAT_MSG = 'The provided access type is invalid.';
     const INVALID_SVC_PROP_MSG = 'The provided service properties is invalid.';
     const UNKNOWN_SRILZER_MSG = 'The provided serializer type is unknown';
-    const INVALID_CSA_OPT_MSG = 'Must provide valid location or affinity group.';
-    const INVALID_USA_OPT_MSG = 'Must provide either description or label.';
+    const INVALID_CREATE_SERVICE_OPTIONS_MSG = 'Must provide valid location or affinity group.';
+    const INVALID_UPDATE_SERVICE_OPTIONS_MSG = 'Must provide either description or label.';
     const INVALID_CONFIG_MSG = 'Config object must be of type Configuration';
     const INVALID_ACH_MSG = 'The provided access condition header is invalid';
     const INVALID_RECEIVE_MODE_MSG = 'The receive message option is in neither RECEIVE_AND_DELETE nor PEEK_LOCK mode.';
@@ -107,6 +112,14 @@ class Resources
     const ERROR_CONNECTION_STRING_MISSING_CHARACTER = "Missing %s character";
     const ERROR_EMPTY_SETTINGS = 'No keys were found in the connection string';
     const MISSING_LOCK_LOCATION_MSG = 'The lock location of the brokered message is missing.';
+    const INVALID_SLOT = "The provided deployment slot '%s' is not valid. Only 'staging' and 'production' are accepted.";
+    const INVALID_DEPLOYMENT_LOCATOR_MSG = 'A slot or deployment name must be provided.';
+    const INVALID_CHANGE_MODE_MSG = "The change mode must be 'Auto' or 'Manual'. Use Mode class constants for that purpose.";
+    const INVALID_DEPLOYMENT_STATUS_MSG = "The change mode must be 'Running' or 'Suspended'. Use DeploymentStatus class constants for that purpose.";
+    const ERROR_OAUTH_GET_ACCESS_TOKEN = 'Unable to get oauth access token for endpoint \'%s\', account name \'%s\'';
+    const ERROR_OAUTH_SERVICE_MISSING = 'OAuth service missing for account name \'%s\'';
+    const ERROR_METHOD_NOT_FOUND = 'Method \'%s\' not found in object class \'%s\'';
+    const ERROR_INVALID_DATE_STRING = 'Parameter \'%s\' is not a date formatted string \'%s\'';
 
     // HTTP Headers
     const X_MS_HEADER_PREFIX                 = 'x-ms-';
@@ -130,6 +143,7 @@ class Resources
     const X_MS_RANGE                         = 'x-ms-range';
     const X_MS_RANGE_GET_CONTENT_MD5         = 'x-ms-range-get-content-md5';
     const X_MS_LEASE_ID                      = 'x-ms-lease-id';
+    const X_MS_LEASE_TIME                    = 'x-ms-lease-time';
     const X_MS_LEASE_STATUS                  = 'x-ms-lease-status';
     const X_MS_LEASE_ACTION                  = 'x-ms-lease-action';
     const X_MS_DELETE_SNAPSHOTS              = 'x-ms-delete-snapshots';
@@ -152,6 +166,7 @@ class Resources
     const CONTENT_ENCODING                   = 'content-encoding';
     const CONTENT_LANGUAGE                   = 'content-language';
     const CONTENT_LENGTH                     = 'content-length';
+    const CONTENT_LENGTH_NO_SPACE            = 'contentlength';
     const CONTENT_MD5                        = 'content-md5';
     const CONTENT_TYPE                       = 'content-type';
     const CONTENT_ID                         = 'content-id';
@@ -166,7 +181,8 @@ class Resources
     const MAX_DATA_SERVICE_VERSION           = 'maxdataserviceversion';
     const ACCEPT_HEADER                      = 'accept';
     const ACCEPT_CHARSET                     = 'accept-charset';
-    
+    const USER_AGENT                         = 'User-Agent';
+
     // Type
     const QUEUE_TYPE_NAME              = 'IQueue';
     const BLOB_TYPE_NAME               = 'IBlob';
@@ -176,12 +192,22 @@ class Resources
     const WRAP_TYPE_NAME               = 'IWrap';
 
     // WRAP
-    const WRAP_ACCESS_TOKEN            = 'wrap_access_token'; 
-    const WRAP_ACCESS_TOKEN_EXPIRES_IN = 'wrap_access_token_expires_in'; 
+    const WRAP_ACCESS_TOKEN            = 'wrap_access_token';
+    const WRAP_ACCESS_TOKEN_EXPIRES_IN = 'wrap_access_token_expires_in';
     const WRAP_NAME                    = 'wrap_name';
     const WRAP_PASSWORD                = 'wrap_password';
-    const WRAP_SCOPE                   = 'wrap_scope'; 
-    
+    const WRAP_SCOPE                   = 'wrap_scope';
+
+    // OAuth
+    const OAUTH_GRANT_TYPE              = 'grant_type';
+    const OAUTH_CLIENT_ID               = 'client_id';
+    const OAUTH_CLIENT_SECRET           = 'client_secret';
+    const OAUTH_SCOPE                   = 'scope';
+    const OAUTH_GT_CLIENT_CREDENTIALS   = 'client_credentials';
+    const OAUTH_ACCESS_TOKEN            = 'access_token';
+    const OAUTH_EXPIRES_IN              = 'expires_in';
+    const OAUTH_ACCESS_TOKEN_PREFIX     = 'Bearer ';
+
     // HTTP Methods
     const HTTP_GET    = 'GET';
     const HTTP_PUT    = 'PUT';
@@ -189,7 +215,7 @@ class Resources
     const HTTP_HEAD   = 'HEAD';
     const HTTP_DELETE = 'DELETE';
     const HTTP_MERGE  = 'MERGE';
-    
+
     // Misc
     const EMPTY_STRING           = '';
     const SEPARATOR              = ',';
@@ -208,24 +234,29 @@ class Resources
     const DEV_STORE_URI = 'http://127.0.0.1';
     const SERVICE_URI_FORMAT = "%s://%s.%s";
     const WRAP_ENDPOINT_URI_FORMAT = "https://%s-sb.accesscontrol.windows.net/WRAPv0.9";
-    
+
     // Xml Namespaces
     const WA_XML_NAMESPACE   = 'http://schemas.microsoft.com/windowsazure';
     const ATOM_XML_NAMESPACE = 'http://www.w3.org/2005/Atom';
     const DS_XML_NAMESPACE   = 'http://schemas.microsoft.com/ado/2007/08/dataservices';
     const DSM_XML_NAMESPACE  = 'http://schemas.microsoft.com/ado/2007/08/dataservices/metadata';
     const XSI_XML_NAMESPACE  = 'http://www.w3.org/2001/XMLSchema-instance';
-    
+
 
     // Header values
-    const STORAGE_API_LATEST_VERSION     = '2011-08-18';
-    const SM_API_LATEST_VERSION          = '2011-10-01';
-    const DATA_SERVICE_VERSION_VALUE     = '1.0;NetFx';
-    const MAX_DATA_SERVICE_VERSION_VALUE = '2.0;NetFx';
-    const ACCEPT_HEADER_VALUE            = 'application/atom+xml,application/xml';
-    const ATOM_ENTRY_CONTENT_TYPE      
-        = 'application/atom+xml;type=entry;charset=utf-8';
-    const ACCEPT_CHARSET_VALUE           = 'utf-8';
+    const SDK_USER_AGENT                                = 'Azure-SDK-For-PHP/0.4.0';
+    const STORAGE_API_LATEST_VERSION                    = '2011-08-18';
+    const SM_API_LATEST_VERSION                         = '2011-10-01';
+    const DATA_SERVICE_VERSION_VALUE                    = '1.0;NetFx';
+    const MAX_DATA_SERVICE_VERSION_VALUE                = '2.0;NetFx';
+    const ACCEPT_HEADER_VALUE                           = 'application/atom+xml,application/xml';
+    const ATOM_ENTRY_CONTENT_TYPE                       = 'application/atom+xml;type=entry;charset=utf-8';
+    const ATOM_FEED_CONTENT_TYPE                        = 'application/atom+xml;type=feed;charset=utf-8';
+    const ACCEPT_CHARSET_VALUE                          = 'utf-8';
+    const INT32_MAX                                     = 2147483647;
+    const MEDIA_SERVICES_API_LATEST_VERSION             = '2.2';
+    const MEDIA_SERVICES_DATA_SERVICE_VERSION_VALUE     = '3.0;NetFx';
+    const MEDIA_SERVICES_MAX_DATA_SERVICE_VERSION_VALUE = '3.0;NetFx';
 
     // Query parameter names
     const QP_PREFIX             = 'Prefix';
@@ -254,7 +285,18 @@ class Resources
     const QP_NEXT_PK            = 'NextPartitionKey';
     const QP_NEXT_RK            = 'NextRowKey';
     const QP_ACTION             = 'action';
-    
+    const QP_EMBED_DETAIL       = 'embed-detail';
+
+    // Query parameter values
+    const QPV_REGENERATE = 'regenerate';
+    const QPV_CONFIG     = 'config';
+    const QPV_STATUS     = 'status';
+    const QPV_UPGRADE    = 'upgrade';
+    const QPV_WALK_UPGRADE_DOMAIN = 'walkupgradedomain';
+    const QPV_REBOOT = 'reboot';
+    const QPV_REIMAGE = 'reimage';
+    const QPV_ROLLBACK = 'rollback';
+
     // Request body content types
     const URL_ENCODED_CONTENT_TYPE = 'application/x-www-form-urlencoded';
     const XML_CONTENT_TYPE         = 'application/xml';
@@ -262,7 +304,7 @@ class Resources
     const XML_ATOM_CONTENT_TYPE    = 'application/atom+xml';
     const HTTP_TYPE                = 'application/http';
     const MULTIPART_MIXED_TYPE     = 'multipart/mixed';
-    
+
     // Common used XML tags
     const XTAG_ATTRIBUTES                 = '@attributes';
     const XTAG_NAMESPACE                  = '@namespace';
@@ -290,6 +332,63 @@ class Resources
     const XTAG_KEY_TYPE                   = 'KeyType';
     const XTAG_STORAGE_SERVICE_KEYS       = 'StorageServiceKeys';
     const XTAG_ERROR                      = 'Error';
+    const XTAG_HOSTED_SERVICE             = 'HostedService';
+    const XTAG_HOSTED_SERVICE_PROPERTIES  = 'HostedServiceProperties';
+    const XTAG_CREATE_HOSTED_SERVICE      = 'CreateHostedService';
+    const XTAG_CREATE_STORAGE_SERVICE_INPUT = 'CreateStorageServiceInput';
+    const XTAG_UPDATE_STORAGE_SERVICE_INPUT = 'UpdateStorageServiceInput';
+    const XTAG_CREATE_AFFINITY_GROUP = 'CreateAffinityGroup';
+    const XTAG_UPDATE_AFFINITY_GROUP = 'UpdateAffinityGroup';
+    const XTAG_UPDATE_HOSTED_SERVICE = 'UpdateHostedService';
+    const XTAG_PACKAGE_URL = 'PackageUrl';
+    const XTAG_CONFIGURATION = 'Configuration';
+    const XTAG_START_DEPLOYMENT = 'StartDeployment';
+    const XTAG_TREAT_WARNINGS_AS_ERROR = 'TreatWarningsAsError';
+    const XTAG_CREATE_DEPLOYMENT = 'CreateDeployment';
+    const XTAG_DEPLOYMENT_SLOT = 'DeploymentSlot';
+    const XTAG_PRIVATE_ID = 'PrivateID';
+    const XTAG_ROLE_INSTANCE_LIST = 'RoleInstanceList';
+    const XTAG_UPGRADE_DOMAIN_COUNT = 'UpgradeDomainCount';
+    const XTAG_ROLE_LIST = 'RoleList';
+    const XTAG_SDK_VERSION = 'SdkVersion';
+    const XTAG_INPUT_ENDPOINT_LIST = 'InputEndpointList';
+    const XTAG_LOCKED = 'Locked';
+    const XTAG_ROLLBACK_ALLOWED = 'RollbackAllowed';
+    const XTAG_UPGRADE_STATUS = 'UpgradeStatus';
+    const XTAG_UPGRADE_TYPE = 'UpgradeType';
+    const XTAG_CURRENT_UPGRADE_DOMAIN_STATE = 'CurrentUpgradeDomainState';
+    const XTAG_CURRENT_UPGRADE_DOMAIN = 'CurrentUpgradeDomain';
+    const XTAG_ROLE_NAME = 'RoleName';
+    const XTAG_INSTANCE_NAME = 'InstanceName';
+    const XTAG_INSTANCE_STATUS = 'InstanceStatus';
+    const XTAG_INSTANCE_UPGRADE_DOMAIN = 'InstanceUpgradeDomain';
+    const XTAG_INSTANCE_FAULT_DOMAIN = 'InstanceFaultDomain';
+    const XTAG_INSTANCE_SIZE = 'InstanceSize';
+    const XTAG_INSTANCE_STATE_DETAILS = 'InstanceStateDetails';
+    const XTAG_INSTANCE_ERROR_CODE = 'InstanceErrorCode';
+    const XTAG_OS_VERSION = 'OsVersion';
+    const XTAG_ROLE_INSTANCE = 'RoleInstance';
+    const XTAG_ROLE = 'Role';
+    const XTAG_INPUT_ENDPOINT = 'InputEndpoint';
+    const XTAG_VIP = 'Vip';
+    const XTAG_PORT = 'Port';
+    const XTAG_DEPLOYMENT = 'Deployment';
+    const XTAG_DEPLOYMENTS = 'Deployments';
+    const XTAG_REGENERATE_KEYS = 'RegenerateKeys';
+    const XTAG_SWAP = 'Swap';
+    const XTAG_PRODUCTION = 'Production';
+    const XTAG_SOURCE_DEPLOYMENT = 'SourceDeployment';
+    const XTAG_CHANGE_CONFIGURATION = 'ChangeConfiguration';
+    const XTAG_MODE = 'Mode';
+    const XTAG_UPDATE_DEPLOYMENT_STATUS = 'UpdateDeploymentStatus';
+    const XTAG_ROLE_TO_UPGRADE = 'RoleToUpgrade';
+    const XTAG_FORCE = 'Force';
+    const XTAG_UPGRADE_DEPLOYMENT = 'UpgradeDeployment';
+    const XTAG_UPGRADE_DOMAIN = 'UpgradeDomain';
+    const XTAG_WALK_UPGRADE_DOMAIN = 'WalkUpgradeDomain';
+    const XTAG_ROLLBACK_UPDATE_OR_UPGRADE = 'RollbackUpdateOrUpgrade';
+    const XTAG_CONTAINER_NAME = 'ContainerName';
+    const XTAG_ACCOUNT_NAME = 'AccountName';
 
     // Service Bus
     const LIST_TOPICS_PATH        = '$Resources/Topics';
@@ -309,12 +408,14 @@ class Resources
     const XMLNS                   = 'xmlns';
     const ATOM_NAMESPACE          = 'http://www.w3.org/2005/Atom';
 
-    // ATOM string 
+    // ATOM string
     const AUTHOR      = 'author';
     const CATEGORY    = 'category';
     const CONTRIBUTOR = 'contributor';
     const ENTRY       = 'entry';
     const LINK        = 'link';
+    const PROPERTIES  = 'properties';
+    const ELEMENT     = 'element';
 
     // PHP URL Keys
     const PHP_URL_SCHEME   = 'scheme';
@@ -325,14 +426,15 @@ class Resources
     const PHP_URL_PATH     = 'path';
     const PHP_URL_QUERY    = 'query';
     const PHP_URL_FRAGMENT = 'fragment';
-    
+
     // Status Codes
-    const STATUS_OK              = 200;
-    const STATUS_CREATED         = 201;
-    const STATUS_ACCEPTED        = 202;
-    const STATUS_NO_CONTENT      = 204;
-    const STATUS_PARTIAL_CONTENT = 206;
-    
+    const STATUS_OK                = 200;
+    const STATUS_CREATED           = 201;
+    const STATUS_ACCEPTED          = 202;
+    const STATUS_NO_CONTENT        = 204;
+    const STATUS_PARTIAL_CONTENT   = 206;
+    const STATUS_MOVED_PERMANENTLY = 301;
+
     // HTTP_Request2 config parameter names
     const USE_BRACKETS    = 'use_brackets';
     const SSL_VERIFY_PEER = 'ssl_verify_peer';
@@ -340,8 +442,13 @@ class Resources
     const SSL_LOCAL_CERT  = 'ssl_local_cert';
     const SSL_CAFILE      = 'ssl_cafile';
     const CONNECT_TIMEOUT = 'connect_timeout';
-    
+
+    // Media services
+    const MEDIA_SERVICES_URL = 'https://media.windows.net/API/';
+    const MEDIA_SERVICES_OAUTH_URL = 'https://wamsprodglobal001acs.accesscontrol.windows.net/v2/OAuth2-13';
+    const MEDIA_SERVICES_OAUTH_SCOPE = 'urn:WindowsAzureMediaServices';
+    const MEDIA_SERVICES_INPUT_ASSETS_REL  = 'http://schemas.microsoft.com/ado/2007/08/dataservices/related/InputMediaAssets';
+
+
     // @codingStandardsIgnoreEnd
 }
-
-

@@ -34,7 +34,7 @@ namespace WindowsAzure\Common\Internal;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 class ConnectionStringParser
@@ -122,7 +122,7 @@ class ConnectionStringParser
             
             switch ($this->_state) {
             case ParserState::EXPECT_KEY:
-                $key    = $this->_extractKey();
+                $key          = $this->_extractKey();
                 $this->_state = ParserState::EXPECT_ASSIGNMENT;
                 break;
             
@@ -132,11 +132,11 @@ class ConnectionStringParser
                 break;
             
             case ParserState::EXPECT_VALUE:
-                $value = $this->_extractValue();
-                $this->_state = ParserState::EXPECT_SEPARATOR;
+                $value                        = $this->_extractValue();
+                $this->_state                 = ParserState::EXPECT_SEPARATOR;
                 $connectionStringValues[$key] = $value;
-                $key   = null;
-                $value = null;
+                $key                          = null;
+                $value                        = null;
                 break;
             
             default:
@@ -353,7 +353,7 @@ class ConnectionStringParser
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 class ParserState

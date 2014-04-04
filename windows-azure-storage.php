@@ -119,6 +119,9 @@ if (get_option('azure_storage_use_for_default_upload') == 1) {
 
     // Hook for handling media uploads
     add_filter('wp_handle_upload', 'windows_azure_storage_wp_handle_upload');
+    
+    // Azure cache-control extension
+    include_once('windows-azure-storage-cache-control.php');
 }
 
 // Hook for acecssing attachment (media file) URL
@@ -303,15 +306,20 @@ function windows_azure_storage_wp_update_attachment_metadata($data, $postID)
         
         delete_post_meta($postID, 'windows_azure_storage_info');
 
-        add_post_meta(
-            $postID, 'windows_azure_storage_info', 
-            array(
+        $meta_data = array(
                 'container' => $default_azure_storage_account_container_name, 
                 'blob' => $relativeFileName, 
                 'url' => $url,
-                'thumbnails' => $thumbnails
-            )
-        );
+                'thumbnails' => $thumbnails );
+        
+        if (get_option('azure_storage_use_for_default_upload') == 1) {
+            $defaultCacheControl = WindowsAzureStorageUtil::getDefaultCacheControl();		  
+            if (!empty($defaultCacheControl)) {
+              $meta_data['cache_control'] = $defaultCacheControl;
+            }
+        }
+        
+        add_post_meta($postID, 'windows_azure_storage_info', $meta_data);
         
         // Delete the local file
         unlink($uploadFileName);
@@ -495,5 +503,10 @@ function windows_azure_storage_plugin_menu()
 
     // Call register settings function
     add_action('admin_init', 'windows_azure_storage_plugin_register_settings');
+    
+    if (get_option('azure_storage_use_for_default_upload') == 1) {
+        // Custom page for entering new cache control value for bulk update
+        add_media_page( 'Bulk update cache-control header', null, 'edit_others_posts', 'wp-bulk-cache-control', 'bulk_cache_control_page' );
+    }
 }
 ?>

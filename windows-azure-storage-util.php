@@ -193,6 +193,16 @@ class WindowsAzureStorageUtil
     }
 
     /**
+     * Get default cache control property setting
+     *
+     * @return string cache control property setting
+     */
+    public static function getDefaultCacheControl()
+    {
+        return get_option('azure_storage_default_cache_control');
+    }
+    
+    /**
      * Create blob storage client using Azure SDK for PHP
      *
      * @param string $accountName   Windows Azure Storage account name
@@ -412,6 +422,10 @@ class WindowsAzureStorageUtil
           $createBlobOptions = new CreateBlobOptions();
           $createBlobOptions->setBlobContentType($blobContentType);
           $createBlobOptions->setMetadata($metadata);
+          $defaultCacheControl = WindowsAzureStorageUtil::getDefaultCacheControl();		  
+          if (!empty($defaultCacheControl)) {
+            $createBlobOptions->setBlobCacheControl($defaultCacheControl);
+          }
           $blobRestProxy->createBlockBlob($containerName, $blobName, $handle, $createBlobOptions);
           fclose($handle);
         } else {

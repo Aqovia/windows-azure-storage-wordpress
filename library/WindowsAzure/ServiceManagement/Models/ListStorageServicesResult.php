@@ -34,7 +34,7 @@ use WindowsAzure\Common\Internal\Resources;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 class ListStorageServicesResult
@@ -53,23 +53,14 @@ class ListStorageServicesResult
      */
     public static function create($parsed)
     {
-        $result = new ListStorageServicesResult();
-        
-        $result->_storageServices = array();
-        $entries                  = Utilities::tryGetArray(
+        $result             = new ListStorageServicesResult();
+        $rowStorageServices = Utilities::tryGetArray(
             Resources::XTAG_STORAGE_SERVICE,
             $parsed
         );
         
-        foreach ($entries as $value) {
-            $properties = new ServiceProperties();
-            $properties->setServiceName(
-                Utilities::tryGetValue($value, Resources::XTAG_SERVICE_NAME)
-            );
-            $properties->setUrl(
-                Utilities::tryGetValue($value, Resources::XTAG_URL)
-            );
-            $result->_storageServices[] = $properties;
+        foreach ($rowStorageServices as $rowStorageService) {
+            $result->_storageServices[] = new StorageService($rowStorageService);
         }
         
         return $result;
@@ -97,5 +88,3 @@ class ListStorageServicesResult
         $this->_storageServices = $storageServices;
     }
 }
-
-

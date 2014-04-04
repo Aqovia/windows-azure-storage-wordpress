@@ -1,10 +1,10 @@
-=== Windows Azure Storage for WordPress ===
-Contributors: Microsoft Open Technologies
+=== Windows Azure Storage for WordPress (with cache control extension) ===
+Contributors: Microsoft Open Technologies, aQovia UK Ltd
 Tags: Microsoft, Microsoft Open Technologies, Windows Azure, Windows Azure Storage, WordPress, Media Files, Upload
 Requires at least: 2.8.0
-Tested up to: 3.4.1
+Tested up to: 3.8.1
 
-Stable tag: 2.0
+Stable tag: 2.0.3
 
 This WordPress plugin allows you to use Windows Azure Storage Service to host your media for your WordPress powered blog.
 
@@ -30,6 +30,18 @@ e.g. if WordPress is installed in "/var/www/html/wordpress" directory, extract t
 1. To activate the plugin, log in into the WordPress as administrator and navigate to list of plugins. Then check the associated checkbox for the plugin and click on "Activate" link.
 
 == Changelog ==
+= 2.0.3 =
+* Fixed issues if file uploads initially weren't handled by this plugin but were so later on
+
+= 2.0.2 =
+* Updated to use Windows Azure SDK for PHP 0.4.0 from https://github.com/WindowsAzure/azure-sdk-for-php (tested on WP 3.8.1)
+* Fixed bad header issues when calling SetBlobProperties, also retains previous properties info on content type etc.
+
+= 2.0.1 =
+* Enables setting of default cache-control header for uploaded files and changing it later either individually or via bulk update
+* For faster access keeps cache-control data stored in local metadata db (but always in sync with Azure container if changed in WP)
+* Note: extension enabled only if "Use Windows Azure Storage for default upload" is ticked in Settings > Windows Azure
+
 = 2.0 =
 * Updated to use Windows Azure SDK for PHP from https://github.com/WindowsAzure/azure-sdk-for-php and fixed to work with Wordpress 3.4.1
 

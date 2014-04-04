@@ -152,6 +152,7 @@ function windows_azure_storage_plugin_register_settings()
     register_setting('windows-azure-storage-settings-group', 'http_proxy_username');
     register_setting('windows-azure-storage-settings-group', 'http_proxy_password');
     register_setting('windows-azure-storage-settings-group', 'azure_storage_allow_per_user_settings');
+    register_setting('windows-azure-storage-settings-group', 'azure_storage_default_cache_control');
 }
 
 /**
@@ -214,6 +215,7 @@ function show_windows_azure_storage_settings($mode)
    $httpProxyPort = WindowsAzureStorageUtil::getHttpProxyPort();
    $httpProxyUserName = WindowsAzureStorageUtil::getHttpProxyUserName();
    $httpProxyPassword = WindowsAzureStorageUtil::getHttpProxyPassword();
+   $defaultCacheControl = WindowsAzureStorageUtil::getDefaultCacheControl();
    $newContainerName = null;
    // Use the account settings in the $_POST if this page load is 
    // a result of container creation operation.
@@ -239,6 +241,9 @@ function show_windows_azure_storage_settings($mode)
    
    if (array_key_exists("http_proxy_password", $_POST)) {
        $httpProxyPassword = $_POST["http_proxy_password"];
+   }
+   if (array_key_exists("azure_storage_default_cache_control", $_POST)) {
+       $defaultCacheControl = $_POST["azure_storage_default_cache_control"];
    }
 
    // We need to show the container name if the request for 
@@ -409,6 +414,17 @@ function show_windows_azure_storage_settings($mode)
             <br /><small>Note: Uncheck this to revert back to using your own web host for storage at anytime.</small>
         </td>
       </tr>
+      <tr valign="top">
+        <th scope="row">
+          <label for="azure_storage_default_cache_control" title="Sets Windows Azure default cache-control property for uploaded files">Default cache-control header for uploaded files</label>
+        </th>
+        <td>
+          <input type="text" name="azure_storage_default_cache_control" title="Sets Windows Azure default cache-control property for uploaded files" value="<?php
+    echo $defaultCacheControl; ?>" />
+        </td>
+      <td></td>
+      </tr>	  
+      
     </table>
 <?php
     if (empty($ContainerResult) || !$containerCreationStatus || count($ContainerResult->getContainers()) === 0) {

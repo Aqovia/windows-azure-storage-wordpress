@@ -25,6 +25,7 @@
 namespace WindowsAzure\ServiceManagement\Models;
 use WindowsAzure\Common\Internal\Resources;
 use WindowsAzure\Common\Internal\Utilities;
+use WindowsAzure\ServiceManagement\Internal\Service;
 
 /**
  * The affinity group class.
@@ -34,20 +35,28 @@ use WindowsAzure\Common\Internal\Utilities;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/windowsazure/azure-sdk-for-php
  */
 class AffinityGroup extends Service
 {
     /**
      * Constructs new affinity group object.
-     * 
-     * @param array $raw The array representation for affinity group.
      */
-    public function __construct($raw = null)
+    public function __construct()
     {
-        parent::__construct($raw);
-        $this->setName(Utilities::tryGetValue($raw, Resources::XTAG_NAME));
+        $sources = func_get_args();
+        parent::__construct($sources);
+        
+        foreach ($sources as $source) {
+            $this->setName(
+                Utilities::tryGetValue(
+                    $source,
+                    Resources::XTAG_NAME,
+                    $this->getName()
+                )
+            );
+        }
     }
     
     /**

@@ -38,7 +38,7 @@ use WindowsAzure\Common\Internal\Serialization\XmlSerializer;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/WindowsAzure/azure-sdk-for-php
  */
 
@@ -271,7 +271,6 @@ class RuleInfo
     public function withTrueFilter()
     {
         $filter = new TrueFilter();
-        $filter->setCompatibilityLevel(20);
         $this->_ruleDescription->setFilter($filter);
     }
 
@@ -283,7 +282,6 @@ class RuleInfo
     public function withFalseFilter() 
     {
         $filter = new FalseFilter();
-        $filter->setCompatibilityLevel(20);
         $this->_ruleDescription->setFilter($filter);
     }
 
@@ -295,7 +293,6 @@ class RuleInfo
     public function withEmptyRuleAction()
     {
         $action = new EmptyRuleAction();
-        $action->setCompatibilityLevel(20);
         $this->_ruleDescription->setAction($action);
     }
 

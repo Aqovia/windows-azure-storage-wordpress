@@ -26,6 +26,7 @@ namespace WindowsAzure\ServiceBus\Models;
 use WindowsAzure\Common\Internal\Resources;
 use WindowsAzure\Common\Internal\Utilities;
 use WindowsAzure\Common\Internal\Validate;
+use WindowsAzure\ServiceBus\Internal\Filter;
 
 /**
  * The SQL filter.
@@ -35,7 +36,7 @@ use WindowsAzure\Common\Internal\Validate;
  * @author    Azure PHP SDK <azurephpsdk@microsoft.com>
  * @copyright 2012 Microsoft Corporation
  * @license   http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
- * @version   Release: @package_version@
+ * @version   Release: 0.4.0_2014-01
  * @link      https://github.com/WindowsAzure/azure-sdk-for-php
  */
 
@@ -47,6 +48,14 @@ class SqlFilter extends Filter
      * @var string 
      */
     private $_sqlExpression;
+
+    /**
+     * The compatibility level of the filter. 
+     * 
+     * @var string 
+     */
+    private $_compatibilityLevel;
+
 
     /**
      * Creates a SQL filter with default parameters.
@@ -78,6 +87,28 @@ class SqlFilter extends Filter
     public function setSqlExpression($sqlExpression)
     {
         $this->_sqlExpression = $sqlExpression;
+    }
+
+    /**
+     * Gets the compatibility level. 
+     * 
+     * @return string 
+     */
+    public function getCompatibilityLevel()
+    {
+        return $this->_compatibilityLevel;
+    }
+
+    /**
+     * Sets the compatibility level. 
+     * 
+     * @param string $compatibilityLevel The compatibility level. 
+     * 
+     * @return none
+     */
+    public function setCompatibilityLevel($compatibilityLevel)
+    {
+        $this->_compatibilityLevel = $compatibilityLevel;
     }
 
 }
